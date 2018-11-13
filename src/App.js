@@ -1,25 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Footer from './components/Footer';
+import Marvel from './services/Marvel';
 
 class App extends Component {
+  _consulta() {
+    const filters = [
+      { format: 'comic' },
+      { formatType: 'comic' },
+      { noVariants: 'true' },
+      { title: 'thor' }
+    ]
+    Marvel.comics(...filters)
+      .then(comics => {
+        console.log(comics);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   render() {
+    this._consulta();
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <p>teste</p>
+        <Footer/>
       </div>
     );
   }
