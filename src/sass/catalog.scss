@@ -1,11 +1,26 @@
+// index.css
+html {
+  color: #191919;
+}
+
 body {
+  min-width: 350px;
+  min-height: 100%;
   background-color: #f1f1f1;
 }
 
-////////////////////////////
+#root {
+  height: 100%;
+}
+
+// catalog.css
 .catalog {
   max-width: 1510px;
   margin: 0 auto;
+
+  a {
+    text-decoration: none;
+  }
 
   .container {
     justify-content: center;
@@ -21,5 +36,177 @@ body {
   }
   .media {
     height: 530px;
+  }
+}
+
+// comic
+.comic {
+  max-width: 1510px;
+  min-width: 300px;
+  margin: 0 auto;
+  
+  .bigscreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.5em;
+  }
+  
+  a {
+    margin-top: 2em;
+  }
+
+  .paper {
+    background-color: #f7f7f7;
+
+    -webkit-box-shadow: 0px 3px 10px 0px rgba(125,125,125,0.75);
+    -moz-box-shadow: 0px 3px 10px 0px rgba(125,125,125,0.75);
+    box-shadow: 0px 3px 10px 0px rgba(125,125,125,0.75);
+
+    border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    border: 0px solid #000000;
+
+    padding: 1.5em;
+    margin: 2em 0;
+
+    .title {
+      font-weight: 900;
+    }
+  }
+
+  .section {
+    margin: 1em 0;
+
+  }
+
+  h2 {
+    font-size: 2em;
+    letter-spacing: .05em;
+
+    font-weight: 900;
+    margin: 1em;
+    text-align: center;
+  }
+
+  h3 {
+    font-size: 1.5em;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  img {
+    max-width: 600px;
+    width: 100%;
+    -webkit-box-shadow: 0px 3px 10px 0px rgba(125,125,125,0.75);
+    -moz-box-shadow: 0px 3px 10px 0px rgba(125,125,125,0.75);
+    box-shadow: 0px 3px 10px 0px rgba(125,125,125,0.75);
+  }
+
+  .container {
+    margin: 0 1em;
+  }
+
+
+  .hidebig {
+    display: block;
+  }
+
+  .hidesmall {
+    display: none;
+  }
+
+  @media (min-width: 900px) {
+    .container{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    .title,
+    p {
+      font-size: 1.2em;
+    }
+
+    h3 {
+      font-size: 2em;
+    }
+
+    .bigscreen .paper {
+      width: 43.5%;
+    }
+
+    .oficial {
+      order: -1;
+    }
+    
+    .lancamento {
+      .desc {
+        font-size: 1.2em;
+        margin: 1em 0;
+      }
+
+      order: -2;
+    }
+  }
+
+  @media (min-width:1250px) {
+    .hidebig {
+      display: none;
+    }
+
+    .hidesmall {
+      display: block;
+      margin: 1em;
+      margin-bottom: 2em;
+      max-width: 1510px;
+      
+    }
+
+    .bigscreen {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+
+      .paper {
+        margin: 1em 0;
+        width: 100%;
+      }
+  
+      .oficial,
+      .lancamento {
+        order: 0;
+      }
+    }
+
+    img {
+      margin: 1em;
+    }
+  }
+}
+
+// footer
+#footer {
+  left: 0;
+  bottom: 0;
+  min-width: 350px;
+  background-color: #3c3c3c;
+  padding: .5em;
+  text-align: center;
+
+  p {
+    line-height: .5em;
+  }
+  
+  a {
+    font-size: .8em;
+    color: white;
+    text-decoration: none;
   }
 }

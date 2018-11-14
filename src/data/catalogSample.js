@@ -1,4 +1,4 @@
-export const dataSample = [{
+export const catalogSample = [{
   "id": 28100,
   "digitalId": 13849,
   "title": "Strange (2009) #4",

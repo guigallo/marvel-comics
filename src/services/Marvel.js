@@ -39,6 +39,14 @@ function _createArgs(filters) {
   return text;
 }
 
+function _getHeaders() {
+  return { 
+    headers: new Headers({
+      'Content-Type': 'application/json; charset=utf-8'
+    })
+  };
+}
+
 export default class Marvel {
   static getComics(...filters) {
     const route = 'comics';
@@ -48,7 +56,7 @@ export default class Marvel {
     const url = _baseUrl + route + args;
 
     return new Promise((resolve, reject) => {
-      fetch(url, { headers: new Headers({ 'Content-Type': 'application/json; charset=utf-8' }) })
+      fetch(url, _getHeaders())
         .then(response => {
           return response.json();
         })
@@ -66,6 +74,28 @@ export default class Marvel {
         .catch(err => {
           reject(err);
         });
+    });
+  }
+
+  static comicById(id) {
+    const route = `comics/${id}`;
+    const args = _createArgs(_autentica());
+
+    const url = _baseUrl + route + args;
+    return new Promise((resolve, reject) => {
+      fetch(url, _getHeaders())
+        .then(response => {
+          if(response.status === 404)
+            throw new Error('Quadrinho não encontrado.');
+          
+          if(response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Falha ao consultar o quadrinho.');
+          }
+        })
+        .then(json => resolve(json.data.results[0]))
+        .catch(err => reject(err));
     });
   }
 }
