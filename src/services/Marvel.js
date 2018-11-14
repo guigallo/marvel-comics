@@ -40,7 +40,7 @@ function _createArgs(filters) {
 }
 
 export default class Marvel {
-  static comics(...filters) {
+  static getComics(...filters) {
     const route = 'comics';
     filters.push(..._autentica());
     const args = _createArgs(filters);

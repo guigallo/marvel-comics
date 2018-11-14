@@ -1,0 +1,24 @@
+body {
+  background-color: #f1f1f1;
+}
+
+.catalog {
+  max-width: 1510px;
+  margin: 0 auto;
+}
+.catalog .container {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.catalog .card {
+  max-width: 345px;
+  min-width: 345px;
+  margin: 1em;
+}
+.catalog .media {
+  height: 530px;
+}
+
+/*# sourceMappingURL=catalog.css.map */
