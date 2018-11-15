@@ -5,6 +5,8 @@ import ComicCard from './ComicCard';
 import { catalogSample } from '../data/catalogSample';
 import { FILTERS, PAGINATION, PAGINATION_DATA } from '../event-types'
 import PubSub from 'pubsub-js';
+import DateHelper from '../helpers/DateHelper';
+import Pagination from './Pagination';
 
 class Catalog extends Component {
   constructor(props) {
@@ -14,7 +16,7 @@ class Catalog extends Component {
       msg: '',
       catalog: [],
       currentSearch: '',
-      searchHash: '',
+      searchHash: '2121,125,22657,20912,20613,1140,20432,19242,164521900-01-01,2018-11-15',
       items: 0,
       showingItems: 0,
       page: 0,
@@ -29,11 +31,14 @@ class Catalog extends Component {
     PubSub.subscribe(FILTERS, this._search);
     PubSub.subscribe(PAGINATION, this._pagination);
 
-    const loadSample = false;
+    const loadSample = true;
     if(loadSample) {
       this._jsonToState(catalogSample);
     } else {
-      this._updateCatalog();
+      this._updateCatalog([
+        { series: '2121,125,22657,20912,20613,1140,20432,19242,16452' },
+        { dateRange: '1900-01-01,' + DateHelper.todayToDate() }
+      ]);
     }
   }
 
@@ -149,12 +154,16 @@ class Catalog extends Component {
   render() {
     if(this.state.catalog.length > 0) {
       return (
-        <div className="catalog">
-          <div className="container">
-            {this.state.catalog.map(comic => (
-              <ComicCard key={comic.id} comic={comic} />
-            ))}
+        <div>
+
+          <div className="catalog">
+            <div className="container">
+              {this.state.catalog.map(comic => (
+                <ComicCard key={comic.id} comic={comic} />
+              ))}
+            </div>
           </div>
+          <Pagination />
         </div>
       );
     } else {
