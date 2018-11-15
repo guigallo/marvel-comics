@@ -31,7 +31,7 @@ class Catalog extends Component {
     PubSub.subscribe(FILTERS, this._search);
     PubSub.subscribe(PAGINATION, this._pagination);
 
-    const loadSample = true;
+    const loadSample = false;
     if(loadSample) {
       this._jsonToState(catalogSample);
     } else {
