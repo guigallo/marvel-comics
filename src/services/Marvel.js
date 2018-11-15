@@ -61,15 +61,8 @@ export default class Marvel {
           return response.json();
         })
         .then(json => {
-          if(json.code === 200) {
-            const count = json.data.count;
-            const limit =  json.data.limit;
-            const offset = json.data.offset;
-            const total = json.data.total;
-            console.log(`count: ${count} | limit: ${limit} | offset: ${offset} | total: ${total}`);
-  
-            resolve(json.data.results);
-          }
+          if(json.code === 200) 
+            resolve(json.data);
         })
         .catch(err => {
           reject(err);

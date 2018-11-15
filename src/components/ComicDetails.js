@@ -56,11 +56,14 @@ class ComicDetails extends Component {
             <p className="title">Descrição</p>
             <p className="desc">{ this.state.comic.description }</p>
         </div>
-        <Button variant="contained"
-                color="primary"
-                component={ Link } to="/">
-          Voltar
-        </Button>
+
+        <div className="navigation">
+          <Button variant="contained"
+                  color="primary"
+                  component={ Link } to="/">
+            Voltar
+          </Button>
+        </div>
       </div>
     );
   }

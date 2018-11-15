@@ -20,6 +20,8 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Quadrinhos Marvel</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   </head>
   <body>
     <noscript>
@@ -36,5 +38,13 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+    <!--
+      Just to disable Material.UI error message
+      All pages dont use themes
+    -->
+    <script>
+      window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
+    </script>
   </body>
 </html>

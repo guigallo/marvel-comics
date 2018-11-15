@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ComicHelper from '../helpers/ComicHelper';
 import { Link } from 'react-router-dom';
 
-import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button } from '@material-ui/core';
+import { Card, CardActionArea, CardMedia, CardContent, Typography } from '@material-ui/core';
 
 export default class ComicCard extends Component {
   constructor(props) {
@@ -28,11 +28,6 @@ export default class ComicCard extends Component {
             </CardContent>
           </CardActionArea>
         </Link>
-
-        <CardActions>
-          <Button size="small" color="primary">Share</Button>
-          <Button size="small" color="primary">Mais detalhes</Button>
-        </CardActions>
       </Card>
     );
   }
