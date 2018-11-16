@@ -5,14 +5,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import Icon from '@material-ui/core/Icon';
 import { FILTERS } from '../event-types'
 import PubSub from 'pubsub-js';
-import DateHelper from '../helpers/DateHelper';
-
-const featuredSeries = '2121,125,22657,20912,20613,1140,20432,19242,16452';
 
 class Filters extends Component {
   constructor(props) {
@@ -21,16 +16,16 @@ class Filters extends Component {
       title: '',
       character: '',
       creator: '',
-      dialogCharactersOpen: false,
-      featuredSeries: true
+      dialogCharactersOpen: false
     };
 
     this.search = this.search.bind(this);
     this.openCharacters = this.openCharacters.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.clearFilter = this.clearFilter.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.search();
   }
 
@@ -38,22 +33,10 @@ class Filters extends Component {
     this.setState({ [name]: event.target.value });
   };
 
-  changeFeatured = name => event => {
-    this.setState({ [name]: event.target.checked }, () => {
-      this.search();
-    });
-  };
-
   search(e) {
-    if (e !== undefined) {
+    if (e !== undefined) 
       e.preventDefault();
-      this.setState({ featuredSeries: false }, this.publishNewFilters)
-    } else {
-      this.publishNewFilters();
-    }
-  }
-  
-  publishNewFilters() {
+
     let filters = [];
     if(this.state.title !== '')
       filters.push({title: this.state.title});
@@ -61,12 +44,7 @@ class Filters extends Component {
       filters.push({character: this.state.character});
     if(this.state.creator !== '')
       filters.push({creator: this.state.creator});
-    if(this.state.featuredSeries){
-      filters.push(
-        { series: featuredSeries },
-        { dateRange: '1900-01-01,' + DateHelper.todayToDate() }
-      );
-    }
+
     PubSub.publish(FILTERS, filters);
   }
 
@@ -78,28 +56,32 @@ class Filters extends Component {
     this.setState({ dialogCharactersOpen: true });
   }
 
+  clearFilter(e) {
+    e.preventDefault();
+
+    this.setState({ title: '' }, () => {
+      this.search();
+    })
+  }
+
   render() {
     return (
       <div className="filters">
         <form className="container">
-          <FormControlLabel
-            control={
-              <Switch
-                checked={this.state.featuredSeries}
-                onChange={this.changeFeatured('featuredSeries')}
-                value="featuredSeries"
-                color="primary"
-              />
-            }
-            label="Séries em destaque"
-          />
           <TextField id="title" name="title" label="Título"
             variant="outlined"
-            value={this.state.name}
+            value={this.state.title}
             onChange={this.handleChange('title')}
           />
           <Button className="personagens" onClick={this.openCharacters}>
             Personagens
+          </Button>
+          <Button variant="contained" color="default" onClick={this.clearFilter}>
+            <Icon>
+              <svg viewBox="0 0 24 24">
+                <path fill="#000000" d="M14.76,20.83L17.6,18L14.76,15.17L16.17,13.76L19,16.57L21.83,13.76L23.24,15.17L20.43,18L23.24,20.83L21.83,22.24L19,19.4L16.17,22.24L14.76,20.83M12,12V19.88C12.04,20.18 11.94,20.5 11.71,20.71C11.32,21.1 10.69,21.1 10.3,20.71L8.29,18.7C8.06,18.47 7.96,18.16 8,17.87V12H7.97L2.21,4.62C1.87,4.19 1.95,3.56 2.38,3.22C2.57,3.08 2.78,3 3,3V3H17V3C17.22,3 17.43,3.08 17.62,3.22C18.05,3.56 18.13,4.19 17.79,4.62L12.03,12H12Z" />
+              </svg>
+            </Icon>
           </Button>
           <Button variant="contained" color="primary" onClick={this.search} type="submit" >
             <Icon>send</Icon>

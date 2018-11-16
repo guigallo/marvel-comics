@@ -79,19 +79,27 @@ PaginationActions.propTypes = {
 };
 
 class CustomPaginationActionsTable extends React.Component {
-  state = {
-    items: 0,
-    page: 0,
-    itemsPerPage: 20,
-  };
+  constructor(props) {
+    super(props);
 
-  componentWillMount() {
-    PubSub.subscribe(PAGINATION_DATA, (msg, data) => {
-      this.setState({
-        items: data.items,
-        page: data.page,
-        itemsPerPage: data.itemsPerPage
-      });
+    this.state = {
+      items: 0,
+      page: 0,
+      itemsPerPage: 20
+    };
+
+    this.newPage = this.newPage.bind(this);
+  }
+
+  componentDidMount() {
+    PubSub.subscribe(PAGINATION_DATA, this.newPage);
+  }
+
+  newPage(msg, data) {
+    this.setState({
+      items: data.items,
+      page: data.page,
+      itemsPerPage: data.itemsPerPage
     });
   }
 
@@ -111,19 +119,17 @@ class CustomPaginationActionsTable extends React.Component {
   }
 
   render() {
-    const { items, itemsPerPage, page } = this.state;
-
     return (
       <Paper className="pagination">
         <Table>
           <TableFooter>
             <TableRow>
               <TablePagination
-                labelRowsPerPage="Quadrinhos por pagina:"
+                labelRowsPerPage="Mostrar:"
                 rowsPerPageOptions={[12, 20, 32]}
-                count={items}
-                rowsPerPage={itemsPerPage}
-                page={page}
+                count={this.state.items}
+                rowsPerPage={this.state.itemsPerPage}
+                page={this.state.page}
                 onChangePage={this.handleChangePage}
                 onChangeRowsPerPage={this.handleChangeItemsPerPage}
                 ActionsComponent={PaginationActions}

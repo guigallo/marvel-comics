@@ -5,9 +5,10 @@ import ComicCard from './ComicCard';
 import { catalogSample } from '../data/catalogSample';
 import { FILTERS, PAGINATION, PAGINATION_DATA } from '../event-types'
 import PubSub from 'pubsub-js';
-import DateHelper from '../helpers/DateHelper';
 import Pagination from './Pagination';
+import Filters from './Filters';
 
+// 2121,125,22657,20912,20613,1140,20432,19242,164521900-01-01,2018-11-15
 class Catalog extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +17,7 @@ class Catalog extends Component {
       msg: '',
       catalog: [],
       currentSearch: '',
-      searchHash: '2121,125,22657,20912,20613,1140,20432,19242,164521900-01-01,2018-11-15',
+      searchHash: '',
       items: 0,
       showingItems: 0,
       page: 0,
@@ -35,10 +36,7 @@ class Catalog extends Component {
     if(loadSample) {
       this._jsonToState(catalogSample);
     } else {
-      this._updateCatalog([
-        { series: '2121,125,22657,20912,20613,1140,20432,19242,16452' },
-        { dateRange: '1900-01-01,' + DateHelper.todayToDate() }
-      ]);
+      this._updateCatalog();
     }
   }
 
@@ -152,25 +150,33 @@ class Catalog extends Component {
   }
 
   render() {
-    if(this.state.catalog.length > 0) {
-      return (
-        <div>
+    return (
+      <div>
+        <Filters />
+        <CatalogItems catalog={this.state.catalog} msg={this.state.msg} />
+        <Pagination />
+      </div>
+    );
+  }
+}
 
-          <div className="catalog">
-            <div className="container">
-              {this.state.catalog.map(comic => (
-                <ComicCard key={comic.id} comic={comic} />
-              ))}
-            </div>
-          </div>
-          <Pagination />
+function CatalogItems (props) {
+  const catalog = props.catalog;
+  const msg = props.msg
+  if(catalog.length > 0 ) {
+    return (
+      <div className="catalog">
+        <div className="container">
+          {catalog.map(comic => (
+            <ComicCard key={comic.id} comic={comic} />
+          ))}
         </div>
-      );
-    } else {
-      return (
-        <p>{this.state.msg}</p>
-      );
-    }
+      </div>
+    );
+  } else {
+    return (
+      <p>{msg}</p>
+    );
   }
 }
 

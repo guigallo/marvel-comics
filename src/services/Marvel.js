@@ -49,6 +49,7 @@ function _getHeaders() {
 
 export default class Marvel {
   static getComics(...filters) {
+    filters.push({orderBy: '-issueNumber'},{hasDigitalIssue:true});
     const route = 'comics';
     filters.push(..._autentica());
     const args = _createArgs(filters);
