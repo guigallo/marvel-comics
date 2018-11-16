@@ -3,17 +3,17 @@ import ComicHelper from '../helpers/ComicHelper';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
+function canHide(classBase, value) {
+  let classFull = classBase;
+  if(value === null || value.length === 0)
+    classFull += ' hide';
+  return classFull;
+}
+
 class ComicDetails extends Component {
   constructor(props) {
     super(props);
     this.state = { comic: props.comic }
-  }
-
-  canHide(classBase, value) {
-    let classFull = classBase;
-    if(value === null || value.length === 0)
-      classFull += ' hide';
-    return classFull;
   }
 
   render() {
@@ -31,12 +31,12 @@ class ComicDetails extends Component {
               <p className="desc">{ ComicHelper.onsaleDate(this.state.comic) }</p>
           </div>
 
-          <div className={this.canHide('paper hidebig', this.state.comic.description)}>
+          <div className={canHide('paper hidebig', this.state.comic.description)}>
               <p className="title">Descrição</p>
               <p className="desc">{ this.state.comic.description }</p>
           </div>
 
-          <div className={this.canHide('paper', this.state.comic.creators.items)}>
+          <div className={canHide('paper', this.state.comic.creators.items)}>
             <h3>Criadores</h3>
             {this.state.comic.creators.items.reverse().map(creator => (
               <div className="section" key={creator.name + creator.role}>
@@ -58,7 +58,7 @@ class ComicDetails extends Component {
         </div>
         </div>
 
-        <div className={this.canHide('paper hidesmall', this.state.comic.description)}>
+        <div className={canHide('paper hidesmall', this.state.comic.description)}>
             <p className="title">Descrição</p>
             <p className="desc">{ this.state.comic.description }</p>
         </div>

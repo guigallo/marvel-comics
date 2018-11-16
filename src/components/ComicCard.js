@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ComicHelper from '../helpers/ComicHelper';
 import { Link } from 'react-router-dom';
-
 import { Card, CardActionArea, CardMedia, CardContent, Typography } from '@material-ui/core';
 
 export default class ComicCard extends Component {

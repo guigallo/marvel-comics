@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import Marvel from '../services/Marvel';
 import ComicDetails from './ComicDetails';
-import { comicSample } from '../data/comicSample';
+//import { comicSample } from '../data/comicSample';
 
 class Comic extends Component {
   constructor(props) {
@@ -17,14 +17,10 @@ class Comic extends Component {
   componentWillMount() {
     const comicId = this.state.match.params.comicId;
 
-    const loadSample = false;
-    if(loadSample) {
-      this.setState({ comic: comicSample });
-    } else {
-      Marvel.comicById(comicId)
-        .then(comic => this.setState({ comic }))
-        .catch(err => err.message);
-    }
+    //this.setState({ comic: comicSample });
+    Marvel.comicById(comicId)
+      .then(comic => this.setState({ comic }))
+      .catch(err => this.setState({ msg: err.message }));
   }
 
   render() {
@@ -37,7 +33,6 @@ class Comic extends Component {
     }
   }
 }
-
 
 function idNotGiven() {
   return (<h3>Informe o id do quadrinho.</h3>);

@@ -4,29 +4,29 @@ const _baseUrl = 'https://gateway.marvel.com:443/v1/public/';
 const _publicKey = '0469fbe0130d1300ace0f23f9abbdb84';
 const _privateKey = 'dfff2377fd7e4f9a2cd5c6663c22f9adb6277495';
 
-function _getTimestamp() {
+function getTimestamp() {
   return new Date().getTime();
 }
 
-function _getApiKey() {
+function getApiKey() {
   return { apikey: _publicKey };
 }
 
-function _getHash(ts) {
+function getHash(ts) {
   return { hash: md5(ts + _privateKey + _publicKey) };
 }
 
-function _autentica() {
+function autentica() {
   let arrAuth = [];
-  const ts = _getTimestamp();
+  const ts = getTimestamp();
   arrAuth.push({ ts });
-  arrAuth.push(_getApiKey());
-  arrAuth.push(_getHash(ts));
+  arrAuth.push(getApiKey());
+  arrAuth.push(getHash(ts));
 
   return arrAuth;
 }
 
-function _createArgs(filters) {
+function createArgs(filters) {
   let text = '?';
   for(let i = 0; i < filters.length; i++) {
     let key = Object.keys(filters[i]);
@@ -39,7 +39,7 @@ function _createArgs(filters) {
   return text;
 }
 
-function _getHeaders() {
+function getHeaders() {
   return { 
     headers: new Headers({
       'Content-Type': 'application/json; charset=utf-8'
@@ -49,15 +49,15 @@ function _getHeaders() {
 
 export default class Marvel {
   static getComics(...filters) {
-    filters.push({orderBy: '-issueNumber'},{hasDigitalIssue:true});
     const route = 'comics';
-    filters.push(..._autentica());
-    const args = _createArgs(filters);
+    filters.push({orderBy: '-issueNumber'},{hasDigitalIssue:true});
+    filters.push(...autentica());
+    const args = createArgs(filters);
 
     const url = _baseUrl + route + args;
 
     return new Promise((resolve, reject) => {
-      fetch(url, _getHeaders())
+      fetch(url, getHeaders())
         .then(response => {
           return response.json();
         })
@@ -73,11 +73,11 @@ export default class Marvel {
 
   static comicById(id) {
     const route = `comics/${id}`;
-    const args = _createArgs(_autentica());
+    const args = createArgs(autentica());
 
     const url = _baseUrl + route + args;
     return new Promise((resolve, reject) => {
-      fetch(url, _getHeaders())
+      fetch(url, getHeaders())
         .then(response => {
           if(response.status === 404)
             throw new Error('Quadrinho não encontrado.');

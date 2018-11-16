@@ -125,7 +125,7 @@ class CustomPaginationActionsTable extends React.Component {
           <TableFooter>
             <TableRow>
               <TablePagination
-                labelRowsPerPage="Mostrar:"
+                labelRowsPerPage=""
                 rowsPerPageOptions={[12, 20, 32]}
                 count={this.state.items}
                 rowsPerPage={this.state.itemsPerPage}
