@@ -1,15 +1,19 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Live preview
+
 [http://marvel.guigallo.com.br](http://marvel.guigallo.com.br)
+
+## Dependencies
+
+### `npm install`
+
+Install all dependencies before run scripts.
+
 
 ## Available Scripts
 
 In the project directory, you can run:
-
-### `npm install`
-
-Install all dependencies.
 
 ### `npm start`
 
